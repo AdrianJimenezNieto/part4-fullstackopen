@@ -12,7 +12,14 @@ const totalLikes = (blogs) => {
     : blogs.map(blog => blog.likes).reduce(reducer, 0)
 }
 
+const favouriteBlog = (blogs) => {
+  return blogs.length === 0
+    ? {}
+    : blogs.reduce((max, item) => item.likes > max.likes ? item : max)
+}
+
 module.exports = {
   dummy,
-  totalLikes
+  totalLikes,
+  favouriteBlog
 }
