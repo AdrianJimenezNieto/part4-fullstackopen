@@ -28,11 +28,31 @@ const mostBlogs = (blogs) => {
     author => blogsPerAuthor[author].length
   )
 
-  return 
+  return blogs.length === 0
+    ? {}
+    : { author: mostBlogsAuthor, blogs: blogsPerAuthor[mostBlogsAuthor].length }
+}
+
+const mostLikes = (blogs) => {
+  const blogsPerAuthor = loadsh.groupBy(blogs, 'author')
+
+  const mostLikesAuthor = loadsh.maxBy(
+    loadsh.keys(blogsPerAuthor),
+    author => loadsh.sumBy(blogsPerAuthor[author], 'likes')
+  )
+
+  return blogs.length === 0
+    ? {}
+    : {
+        author: mostLikesAuthor,
+        likes: loadsh.sumBy(blogsPerAuthor[mostLikesAuthor], 'likes')
+      }
 }
 
 module.exports = {
   dummy,
   totalLikes,
-  favouriteBlog
+  favouriteBlog,
+  mostBlogs,
+  mostLikes
 }
